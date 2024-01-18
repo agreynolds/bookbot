@@ -1,17 +1,23 @@
 def main():
     book_path = "books/frankenstein.txt"
-    
     book_contents = read_book(book_path)
-
     word_count = count_words(book_contents)
-    print(f"{book_path} has {word_count} words.")
-    print("---------")
     letter_count = count_letters(book_contents)
-    for key in letter_count:
-        if letter_count[key] == 1:
-            print(f"{book_path} has {letter_count[key]} {key} character.")
-        else: 
-            print(f"{book_path} has {letter_count[key]} {key} characters.")
+    sorted_letters = sort_letters(letter_count)
+
+
+    print("\n")
+    print("=============================================")
+    print(f"=== Book Report of {book_path} ===")
+    print("=============================================")
+    print("\n")
+    print("---------------- Word Count -----------------")
+    print(f"{word_count} words found in the document")
+    print("\n")
+    print("--------------- Letter Count ----------------")
+    print_letter_counts(sorted_letters)
+
+      
 
 
 def read_book(book_path):
@@ -31,6 +37,19 @@ def count_letters(text):
             letter_dictionary[char] += 1
         else: 
             letter_dictionary[char] = 1
-    return letter_dictionary        
+    return letter_dictionary     
+
+def sort_letters(letter_count):
+    letters = []
+    for letter in letter_count:
+        if letter.isalpha():
+            letter_tuple = (letter_count[letter], letter)
+            letters.append(letter_tuple)
+    letters.sort(reverse = True)
+    return letters
+
+def print_letter_counts(sorted_letters):
+    for letter in sorted_letters:
+        print(f"The letter \'{letter[1]}\' was found in the document {letter[0]}")
 
 main()
